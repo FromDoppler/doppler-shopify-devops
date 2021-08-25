@@ -1,0 +1,13 @@
+---
+
+- hosts: base
+  become: yes
+  vars:
+    - override_autoupdate: true
+    - ntp_timezone: Etc/UTC
+  roles:
+    - deployer
+    - common
+    - boto
+    - awscli
+    - ntp

@@ -1,0 +1,25 @@
+---
+
+# Packages to install
+
+basic_packages:
+  - zip
+  - unzip
+  - links
+  - htop
+  - python3-urllib3
+  - python3-mysqldb
+  - s3cmd
+  - python3-boto
+  - mailutils
+  - python3-magic
+  - sysstat
+  - mc
+  - subversion
+  - curl
+  - iotop
+  - jq
+  - sysstat
+  - vim
+  - binutils
+  - python3-pymysql

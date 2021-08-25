@@ -1,0 +1,35 @@
+---
+#
+# Requirements file
+#
+- src: https://github.com/geerlingguy/ansible-role-mysql/archive/3.3.2.tar.gz
+  name: mysql
+  version: 3.3.2
+
+- src: geerlingguy.ntp
+  name: ntp
+  version: 1.6.4
+
+- src: kbrebanov.terraform
+  name: terraform
+  version: v2.0.0
+
+- src: ahuffman.resolv
+  name: resolv
+  version: 1.3.1
+
+- src: darkwizard242.python3
+  name: python3
+  version: 1.0.6
+
+- src: geerlingguy.apache
+  name: apache
+  version: 3.1.4
+
+- src: geerlingguy.php-versions
+  name: php-versions
+  version: 5.0.0
+
+- src: https://github.com/geerlingguy/ansible-role-php
+  name: php
+  version: 4.5.1

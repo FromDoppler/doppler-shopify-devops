@@ -1,0 +1,12 @@
+---
+
+ - include: install.yml
+   tags:
+     - common_install
+ - include: message.yml
+   tags:
+     - common_message 
+ - include: override.yml
+   tags:
+     - common_override
+ - include: sysctl.yml

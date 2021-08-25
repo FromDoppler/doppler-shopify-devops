@@ -1,0 +1,7 @@
+*.iml
+*.tfstate*
+**/.terraform
+*.tfplan
+workspace
+.vscode
+/.project

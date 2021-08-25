@@ -1,0 +1,4 @@
+---
+
+ - name: Sysctl for A timestamp was disclosed by the application/web server - Unix
+   shell: echo "net.ipv4.tcp_timestamps = 0" > /etc/sysctl.d/tcp_timestamps.conf

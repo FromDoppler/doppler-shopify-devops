@@ -1,0 +1,7 @@
+---
+
+- name: Removemos cloud-init logs
+  file:
+    state: absent
+    path: "/var/log/cloud-init.log"
+  ignore_errors: true
