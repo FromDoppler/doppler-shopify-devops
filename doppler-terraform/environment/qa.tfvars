@@ -20,4 +20,4 @@ asg_min_size = 1
 asg_max_size = 1
 asg_check_type = "ELB"
 
-doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/ac984044-df05-4840-9456-07e3140ad9dc"
+doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/195db146-2553-473c-ab15-99690b95c4f0"
