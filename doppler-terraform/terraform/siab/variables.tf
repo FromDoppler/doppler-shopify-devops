@@ -58,3 +58,7 @@ variable "asg_check_type" {
 variable "doppler_ssl_arn" {
   type = string
 }
+
+variable "admin_access_cidr" {
+  type = list(string)
+}

@@ -21,3 +21,9 @@ asg_max_size = 1
 asg_check_type = "ELB"
 
 doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/195db146-2553-473c-ab15-99690b95c4f0"
+
+## SSH Access for dev and admins
+admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
+                        "190.105.118.48/32",     # Adrián Aguirre VNS
+                        "181.44.131.56/32"       # Adrián Catacora
+                    ]
