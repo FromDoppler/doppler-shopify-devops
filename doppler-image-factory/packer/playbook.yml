@@ -1,0 +1,19 @@
+---
+
+- hosts: siab
+  become: yes
+  vars_files: 
+    - vars/apache.yml
+    - vars/php.yml
+  pre_tasks:
+    - name: Set discovered Ansible Python interpreter.
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python3"
+        when: ansible_python_interpreter is not defined
+  roles:
+    - apache
+    - apache-config
+    - php-versions
+    - php
+    - php-config
+    - mysql

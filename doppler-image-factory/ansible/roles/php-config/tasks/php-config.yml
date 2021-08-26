@@ -1,0 +1,11 @@
+---
+
+- name: Replace php_config
+  ansible.builtin.lineinfile:
+    path: "/etc/php/{{ php_version }}/apache2/php.ini"
+    regexp: '^{{ item.split(" ")[0] }}'
+    line: '{{ item }}'
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: "{{ php_config_variables }}"

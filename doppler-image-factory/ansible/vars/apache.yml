@@ -1,0 +1,10 @@
+---
+apache_mods_enabled:
+  - rewrite.load
+  - ssl.load
+  - status.load
+  - headers.load
+
+apache_security_config:
+  - "ServerSignature Off"
+  - "ServerTokens Prod"

@@ -1,0 +1,29 @@
+---
+## PHP Version
+php_version: '7.4'
+php_default_version_debian: "{{php_version}}"
+
+## Galaxy role requirements
+php_install_from_source: false
+php_enable_webserver: false
+
+## PHP ini variables
+php_memory_limit: "128M"
+php_max_execution_time: "90"
+php_upload_max_filesize: "256M"
+
+## Extra packages and mods
+php_packages_extra:
+  - php{{php_version}}-intl
+  - php{{php_version}}-ldap
+  - php{{php_version}}-mailparse
+  - php{{php_version}}-mysqli
+  - php{{php_version}}-mysqlnd
+  - php{{php_version}}-soap
+  - php{{php_version}}-xdebug
+  - php{{php_version}}-xmlrpc
+  - php{{php_version}}-zip
+  - libapache2-mod-php{{php_version}}
+
+php_config_variables:
+  - "expose_php = Off"

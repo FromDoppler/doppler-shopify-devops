@@ -1,0 +1,9 @@
+---
+
+ - name: Mensaje expicando que el servidor esta automatizado.
+   template:
+     dest=/etc/update-motd.d/95-ansible
+     src=etc-update-motd-d-95-ansible.j2
+     owner=root
+     group=root
+     mode='755'

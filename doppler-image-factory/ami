@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import logging
+import argparse
+from helpers import aws_handler
+
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
+
+# Get needed environment variables (account and region)
+MAIN_ACCOUNT = os.getenv('AWS_ACCOUNT')
+MAIN_REGION = os.environ.get('AWS_REGION')
+
+if not MAIN_ACCOUNT and not MAIN_REGION:
+    raise SystemExit("Both, AWS_ACCOUNT and AWS_REGION should be exported: Ej: export AWS_ACCOUNT=123123123123 ; export AWS_REGION=us-east-1")
+
+# Logging
+logger = logging.getLogger('root')
+logger.setLevel(logging.getLevelName(LOG_LEVEL))
+handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
+aws_handler = aws_handler.AWSHandler()
+
+# Parse Input
+parser = argparse.ArgumentParser(description='Tool for image manipulation.', epilog='For help on any of the actions, $command --help')
+subparsers = parser.add_subparsers()
+
+parser_list = subparsers.add_parser('list', help='list all images available for a specific role')
+parser_list.add_argument('role', help='Role to filter by')
+parser_list.set_defaults(func=aws_handler.print_image_list)
+
+parser_list = subparsers.add_parser('promote', help='promote an image through all accounts/regions')
+parser_list.add_argument('uuid', help='UUID of image to promote')
+parser_list.add_argument('environment', help='Environment to be promoted')
+parser_list.add_argument('-f', '--force', action='store_true', dest='force', help='Force action')
+parser_list.set_defaults(func=aws_handler.promote)
+
+parser_list = subparsers.add_parser('demote', help='demote an image through all accounts/regions')
+parser_list.add_argument('uuid', help='UUID of image to demote')
+parser_list.add_argument('environment', help='Environment to be demoted')
+parser_list.set_defaults(func=aws_handler.demote)
+
+parser_list = subparsers.add_parser('overview', help='see an environment status')
+parser_list.add_argument('country_code', help='country of the environment')
+parser_list.add_argument('environment', help='Environment')
+parser_list.add_argument('-p', '--project', default='doppler', dest='project', help='doppler by default, but it can be used for any other project Tag')
+parser_list.set_defaults(func=aws_handler.get_env_overview)
+
+args = parser.parse_args()
+args.func(args)

@@ -1,0 +1,11 @@
+---
+
+- name: Replace apache security vars
+  ansible.builtin.lineinfile:
+    path: /etc/apache2/conf-enabled/security.conf
+    regexp: '^{{ item.split(" ")[0] }}'
+    line: '{{ item }}'
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: "{{ apache_security_config }}"

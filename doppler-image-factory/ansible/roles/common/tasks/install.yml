@@ -1,0 +1,5 @@
+---
+
+  - name: Instala paquetes basicos
+    apt: name={{ item }} state=present update_cache=yes
+    with_items: "{{ basic_packages }}"

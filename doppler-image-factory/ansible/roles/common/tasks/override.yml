@@ -1,0 +1,23 @@
+---
+
+ - name: Create /etc/systemd/system/apt-daily.timer.d folder
+   file:
+     path: /etc/systemd/system/apt-daily.timer.d
+     state: directory
+     owner: root
+     group: root
+     mode: 0755
+
+ - name: Override apt autoupdate
+   copy:
+     src=override.conf
+     dest=/etc/systemd/system/apt-daily.timer.d/override.conf
+     owner=root
+     group=root
+     mode='644'
+
+ - name: Disable service
+   command: systemctl disable apt-daily.service
+
+ - name: Disable timer
+   command: systemctl disable apt-daily.timer
