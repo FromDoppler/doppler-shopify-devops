@@ -14,18 +14,19 @@ aws_region                      = "us-east-2"
 # ASG
 asg_enabled_metrics = []
 role          = "siab"
-isntance_type = "t3.micro"
+isntance_type = "t3.medium"
 asg_desired_capacity = 1
 asg_min_size = 1
 asg_max_size = 1
 asg_check_type = "ELB"
 
-doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/6fef65c6-f0d6-4657-a988-73e266ed66ff"
+doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/d0273f67-be0c-47bf-9131-833a376b85b1"
 
 ## SSH Access for dev and admins
 admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
                         "190.105.118.48/32",     # Adrián Aguirre VNS
                         "181.44.131.56/32",      # Adrián Catacora
+                        "181.170.106.169/32",    # Federico Aguirre VNS 
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32"       # doppler VPN2
                     ]

@@ -8,7 +8,7 @@ php_install_from_source: false
 php_enable_webserver: false
 
 ## PHP ini variables
-php_memory_limit: "128M"
+php_memory_limit: "4G"
 php_max_execution_time: "90"
 php_upload_max_filesize: "256M"
 
