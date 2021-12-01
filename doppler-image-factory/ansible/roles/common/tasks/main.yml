@@ -10,3 +10,4 @@
    tags:
      - common_override
  - include: sysctl.yml
+ - include: cron.yml

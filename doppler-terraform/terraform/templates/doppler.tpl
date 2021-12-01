@@ -8,6 +8,7 @@ preserve_hostname: true
 runcmd:
   - set -x
   - export HOME=/root
+  - echo "ENVIRONMENT=${environment}" >> /etc/environment
   - instanceid=$(curl -s http://169.254.169.254/latest/meta-data/instance-id | tr -d 'i-')
   - hostn=$(cat /etc/hostname)
   - newhostn="${environment}-${role}-$instanceid"

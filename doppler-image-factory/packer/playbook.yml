@@ -11,6 +11,7 @@
         ansible_python_interpreter: "/usr/bin/python3"
         when: ansible_python_interpreter is not defined
   roles:
+    - common
     - apache
     - apache-config
     - php-versions

@@ -9,3 +9,7 @@
     group: root
     mode: '0644'
   with_items: "{{ apache_security_config }}"
+
+
+- name: Copy apache2 doppler-shopify vhosts
+  copy: src=doppler-shopify.conf dest=/etc/apache2/sites-enabled/doppler-shopify.conf
