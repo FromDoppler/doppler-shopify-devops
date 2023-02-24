@@ -1,58 +1,67 @@
----
-- name: Group deployer creation
-  group: name=deployer state=present
-  tags:
-    - deployer
+﻿cd---
 
-- name: User deployer creation
-  user: name=deployer shell=/bin/bash comment="User to deploy apps" uid=1002 groups=deployer,adm append=yes
-  tags:
-    - deployer
+ - name: Group deployer creation
+   group: name=deployer state=present
+   tags:
+     - deployer
 
-- name: Create .ssh folder
-  file:
-    path: /home/deployer/.ssh
-    state: directory
-    owner: deployer
-    group: deployer
-    mode: 0755
-  tags:
-    - deployer
+ - name: User deployer creation
+   user: name=deployer shell=/bin/bash comment="User to deploy apps" uid=1002 groups=deployer,adm append=yes
+   tags:
+     - deployer
 
-- name: Sudoers rules for deployer user
-  copy: src=80-ansiblecfg-deployer.j2
-    dest=/etc/sudoers.d/80-ansiblecfg-deployer
-    owner=root
-    group=root
-    mode='440'
-    validate='visudo -cf %s'
-  tags:
-    - deployer
+ - name: Create .ssh folder
+   file:
+     path: /home/deployer/.ssh
+     state: directory
+     owner: deployer
+     group: deployer
+     mode: 0755
+   tags:
+     - deployer
 
-- name: Set up multiple authorized keys
-  authorized_key:
-    user: deployer
-    state: present
-    key: "{{ item }}"
-  with_file:
-    - authorized_keys
-  tags:
-    - deployer
-    - authorized
+ - name: Sudoers rules for deployer user
+   copy:
+     src=80-ansiblecfg-deployer.j2
+     dest=/etc/sudoers.d/80-ansiblecfg-deployer
+     owner=root
+     group=root
+     mode='440'
+     validate='visudo -cf %s'
+   tags:
+     - deployer
 
-- name: Vault secret
-  template: dest=/etc/.s
-    src=vault.j2
-    owner=root
-    group=root
-    mode='444'
+ - name: Set up multiple authorized keys
+   authorized_key:
+      user: deployer
+      state: present
+      key: '{{ item }}'
+   with_file:
+      - authorized_keys
+   tags:
+     - deployer
+     - authorized
 
-- name: Sudoers nopasswd rule for users in group sudoers
-  lineinfile:
-    path: /etc/sudoers
-    state: present
-    regexp: "^%sudo"
-    line: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL"
-    validate: "visudo -cf %s"
-  tags:
-    - authorized
+ - name: Vault secret
+   template:
+     dest=/etc/.s
+     src=vault.j2
+     owner=root
+     group=root
+     mode='444'
+
+ - name: Sudoers nopasswd rule for users in group sudoers
+   lineinfile:
+     path: /etc/sudoers
+     state: present
+     regexp: '^%sudo'
+     line: '%sudo ALL=(ALL:ALL) NOPASSWD: ALL'
+     validate: 'visudo -cf %s'
+   tags:
+     - authorized
+
+  - name: Database backup
+    cron:
+        user: "root";
+        minute: 0;
+        job: "mysqldump doppler > /tmp/doppler.sql > /tmp/doppler.sql ; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date “+\%Y”)/$(date “+\%m”)/$(date “+\%d”)/";
