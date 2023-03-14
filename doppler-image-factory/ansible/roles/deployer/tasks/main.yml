@@ -67,19 +67,11 @@
         job: "mysqldump doppler > /tmp/doppler.sql; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date “+\%Y”)/$(date “+\%m”)/$(date “+\%d”)/";
 
   - name: Create swap file
-    shell: fallocate -l 2G /swapfile
-    ignore_errors: true
-
-  - name: Swap file permissions
-    shell: chmod 600 /swapfile
-    ignore_errors: true
-
-  - name: Designate file as swapfile
-    shell: mkswap /swapfile
-    ignore_errors: true
-
-  - name: Enable swapfile
-    shell: swapon /swapfile
+    shell: |
+      fallocate -l 2G /swapfile
+      chmod 600 /swapfile
+      mkswap /swapfile
+      swapon /swapfile
     ignore_errors: true
 
 
