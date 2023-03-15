@@ -18,3 +18,6 @@ runcmd:
   - sed -i "s/$hostn/$newhostn/g" /etc/hostname
   - hostname $newhostn
   - service rsyslog restart
+##Bajar backup de S3
+##Restaurar base de datos
+##Configurar virtualhost
