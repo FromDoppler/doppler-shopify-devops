@@ -1,4 +1,4 @@
-﻿cd---
+﻿---
 
  - name: Group deployer creation
    group: name=deployer state=present
@@ -11,7 +11,7 @@
      - deployer
 
  - name: Create .ssh folder
-   file:
+   file:  
      path: /home/deployer/.ssh
      state: directory
      owner: deployer
@@ -60,19 +60,9 @@
    tags:
      - authorized
 
-  - name: Database backup
-    cron:
-        user: "root";
-        minute: 0;
-        job: "mysqldump doppler > /tmp/doppler.sql; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date “+\%Y”)/$(date “+\%m”)/$(date “+\%d”)/";
-
-  - name: Create swap file
-    shell: |
-      fallocate -l 2G /swapfile
-      chmod 600 /swapfile
-      mkswap /swapfile
-      swapon /swapfile
-    ignore_errors: true
-
-
+ - name: Database backup
+   cron:
+     user: "root"
+     minute: "0"
+     job: "mysqldump doppler > /tmp/doppler.sql ;  /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date “+%Y”)/$(date “+%m”)/$(date “+%d”)/"
   

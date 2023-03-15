@@ -18,3 +18,4 @@
     - php
     - php-config
     - mysql
+    - swapfile
