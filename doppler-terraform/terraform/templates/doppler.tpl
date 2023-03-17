@@ -18,6 +18,8 @@ runcmd:
   - sed -i "s/$hostn/$newhostn/g" /etc/hostname
   - hostname $newhostn
   - service rsyslog restart
-##Bajar backup de S3
-##Restaurar base de datos
-##Configurar virtualhost
+  - /usr/local/bin/aws s3 cp s3://doppler-shopify/backup/$ENVIRONMENT/doppler.sql /tmp/doppler.sql
+  - /usr/local/bin/aws s3 cp s3://doppler-shopify/artifacts/$ENVIRONMENT/doppler.tar.gz /tmp/doppler.tar.gz
+  - /home/deployer mysql -u root -p root < /tmp/doppler.sql
+  - if [ "${environment}" = "prd"]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
+  - if [ "${environment}" != "prd"]; then sed -i "s/SRVNAME/sfyapp-${environment}.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
