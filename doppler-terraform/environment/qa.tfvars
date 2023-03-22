@@ -25,7 +25,7 @@ doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/fb9511ff-8c1b-
 ## SSH Access for dev and admins
 admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
                         "190.105.118.48/32",     # Adrián Aguirre VNS
-                        "190.191.209.158/32",    # Adrián Catacora
+                        "159.223.137.130/32",    # Adrián Catacora
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
                         "104.131.79.81/32",      # doppler jenkins
