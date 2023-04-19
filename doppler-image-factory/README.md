@@ -2,7 +2,7 @@
 
 ## Install Ansible
 
-The server configuration has been automated using Ansible. You can download it from [here](https://www.ansible.com/). 
+The server configuration has been automated using Ansible. You can download it from [here](https://www.ansible.com/).
 
 The images creation has been automated using Packer. You can download it [here](https://www.packer.io/downloads.html).
 
@@ -16,10 +16,10 @@ cd doppler-shopify-devops
 
 ## Variables that need to be exported
 
-* AWS_ACCOUNT - Account in where we will be working on.
-* AWS_REGION - Region in where we will be working on.
-* AWS_PROFILE - AWS cli profile with the proper trusted relationship to assume automation_role
-* VAULT_SECRET - Ansible secret to decrypt the encrypted vault.
+- AWS_ACCOUNT - Account in where we will be working on.
+- AWS_REGION - Region in where we will be working on.
+- AWS_PROFILE - AWS cli profile with the proper trusted relationship to assume automation_role
+- VAULT_SECRET - Ansible secret to decrypt the encrypted vault.
 
 ```
 export AWS_ACCOUNT='12345678'
@@ -72,6 +72,6 @@ Total: 1 row/s
 
 ## AMI types we created for this project
 
-AMI type | Description | Usage
--------- | ----------- | -----
-siab | For Stack-in-a-box servers, including app and dbs | Terraform will use this image to create standalone, all-in-one server for minor environments, like DEV and QA
+| AMI type | Description                                       | Usage                                                                                                         |
+| -------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| siab     | For Stack-in-a-box servers, including app and dbs | Terraform will use this image to create standalone, all-in-one server for minor environments, like DEV and QA |

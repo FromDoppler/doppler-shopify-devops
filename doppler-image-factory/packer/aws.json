@@ -1,70 +1,72 @@
 {
-    "variables": {
-        "aws_access_key": "",
-        "aws_secret_key": "",
-        "aws_region": "us-east-2",
-        "aws_build_regions": "us-east-2",
-        "aws_instance_type": "t3.micro",
-        "aws_vpc_id": "vpc-0c34c1d38805402ac",
-        "aws_subnet_id": "subnet-0d3deb451fdecdc99",
-        "image_name": "",
-        "ssh_username": "ubuntu",
-        "git_commit": "",
-        "build_author": "{{env `USER`}}",
-        "build_uuid": "",
-        "packer_profile": "automation_role",
-        "vault_secret": "{{ env `VAULT_SECRET`}}"
-    },
-    "builders": [{
-        "type": "amazon-ebs",
-        "access_key": "{{user `aws_access_key`}}",
-        "secret_key": "{{user `aws_secret_key`}}",
-        "region": "{{user `aws_region`}}",
-        "source_ami_filter": {
-            "filters": {
-              "name": "base-*"
-            },
-            "owners": ["288672893446"],
-            "most_recent": true
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "aws_region": "us-east-2",
+    "aws_build_regions": "us-east-2",
+    "aws_instance_type": "t3.micro",
+    "aws_vpc_id": "vpc-0c34c1d38805402ac",
+    "aws_subnet_id": "subnet-0d3deb451fdecdc99",
+    "image_name": "",
+    "ssh_username": "ubuntu",
+    "git_commit": "",
+    "build_author": "{{env `USER`}}",
+    "build_uuid": "",
+    "packer_profile": "automation_role",
+    "vault_secret": "{{ env `VAULT_SECRET`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `aws_region`}}",
+      "source_ami_filter": {
+        "filters": {
+          "name": "base-*"
         },
-        "vpc_id": "{{user `aws_vpc_id`}}",
-        "instance_type": "{{user `aws_instance_type`}}",
-        "subnet_id": "{{user `aws_subnet_id`}}",
-        "ssh_username": "{{user `ssh_username`}}",
-        "ami_name": "{{user `image_name`}}-{{timestamp}}",
-        "ami_regions": "{{user `aws_build_regions`}}",
-        "ami_users": [ "129106826746" ],
-        "iam_instance_profile": "{{user `packer_profile`}}",
-        "ssh_pty": "true",
-        "tags": {
-            "Name": "{{user `image_name`}}-{{timestamp}}",
-            "Role": "{{user `image_name`}}",
-            "BuildDate": "{{isotime}}",
-            "BuildAuthor": "{{user `build_author`}}",
-            "BuildUUID": "{{user `build_uuid`}}",
-            "GitCommit": "{{user `git_commit`}}"
-        },
-        "run_tags": {
-            "Name": "packer-{{ build_name }}"
-        },
-        "run_volume_tags": {
-            "Name": "volume-{{ build_name }}"
-        }
-    }],
-    "provisioners": [    {
-        "type": "ansible-local",
-        "playbook_file": "packer/playbook.yml",
-        "inventory_groups": "{{ user `image_name` }}",
-        "playbook_dir": "./ansible/",
-        "galaxy_file": "./ansible/requirements.yml",
-        "extra_arguments": [
-            "-e \"vault_secret={{ user `vault_secret`}}\""
-        ]
+        "owners": ["288672893446"],
+        "most_recent": true
+      },
+      "vpc_id": "{{user `aws_vpc_id`}}",
+      "instance_type": "{{user `aws_instance_type`}}",
+      "subnet_id": "{{user `aws_subnet_id`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ami_name": "{{user `image_name`}}-{{timestamp}}",
+      "ami_regions": "{{user `aws_build_regions`}}",
+      "ami_users": ["129106826746"],
+      "iam_instance_profile": "{{user `packer_profile`}}",
+      "ssh_pty": "true",
+      "tags": {
+        "Name": "{{user `image_name`}}-{{timestamp}}",
+        "Role": "{{user `image_name`}}",
+        "BuildDate": "{{isotime}}",
+        "BuildAuthor": "{{user `build_author`}}",
+        "BuildUUID": "{{user `build_uuid`}}",
+        "GitCommit": "{{user `git_commit`}}"
+      },
+      "run_tags": {
+        "Name": "packer-{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "volume-{{ build_name }}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible-local",
+      "playbook_file": "packer/playbook.yml",
+      "inventory_groups": "{{ user `image_name` }}",
+      "playbook_dir": "./ansible/",
+      "galaxy_file": "./ansible/requirements.yml",
+      "extra_arguments": ["-e \"vault_secret={{ user `vault_secret`}}\""]
     },
     {
-        "type": "ansible-local",
-        "playbook_file": "packer/cleanup.yml",
-        "inventory_groups": "{{ user `image_name` }}",
-        "playbook_dir": "./ansible/"
-    }]
+      "type": "ansible-local",
+      "playbook_file": "packer/cleanup.yml",
+      "inventory_groups": "{{ user `image_name` }}",
+      "playbook_dir": "./ansible/"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 ---
 ## PHP Version
-php_version: '7.4'
+php_version: "7.4"
 php_default_version_debian: "{{php_version}}"
 
 ## Galaxy role requirements
