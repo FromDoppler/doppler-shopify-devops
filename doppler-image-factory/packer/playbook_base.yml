@@ -1,5 +1,4 @@
 ---
-
 - hosts: base
   become: yes
   vars:

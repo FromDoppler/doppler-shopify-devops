@@ -1,5 +1,4 @@
 ---
-
 - name: Removemos cloud-init logs
   file:
     state: absent

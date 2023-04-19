@@ -1,5 +1,4 @@
 ---
-
 # Packages to install
 
 basic_packages:
@@ -24,4 +23,3 @@ basic_packages:
   - binutils
   - python3-pymysql
   - composer
-  
