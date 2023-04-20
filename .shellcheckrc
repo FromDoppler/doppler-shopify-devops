@@ -1,0 +1,3 @@
+#!/bin/sh
+# shellcheck disable=all
+# We will disable shellcheck's analysis until we can address this ticket. https://makingsense.atlassian.net/browse/DSHOP-196
