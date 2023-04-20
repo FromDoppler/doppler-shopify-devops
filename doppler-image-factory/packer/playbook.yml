@@ -1,8 +1,7 @@
 ---
-
 - hosts: siab
   become: yes
-  vars_files: 
+  vars_files:
     - vars/apache.yml
     - vars/php.yml
   pre_tasks:

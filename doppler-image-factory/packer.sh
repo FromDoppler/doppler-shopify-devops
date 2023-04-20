@@ -26,18 +26,21 @@ fi
 export IMAGE=$1
 shift 1
 
+# shellcheck disable=SC2034
 ACCOUNT=128048395459
 export AWS_REGION="${AWS_REGION:-us-east-2}"
 
 get_git_describe_with_dirty() {
   # produces abbrev'ed SHA1 of HEAD with possible -dirty suffix
 
-  local D=$(git describe --all --dirty)
-  local SHA1=$(git show-ref -s --abbrev refs/${D%-dirty})
-  echo ${D/${D%-dirty}/$SHA1}
+  local D
+  D=$(git describe --all --dirty)
+  local SHA1
+  SHA1=$(git show-ref -s --abbrev "refs/${D%-dirty}")
+  echo "${D/${D%-dirty}/$SHA1}"
 }
 
-: ${BUILD_UUID:=$(uuidgen)}
+: "${BUILD_UUID:=$(uuidgen)}"
 GIT_COMMIT=$(get_git_describe_with_dirty)
 
 
@@ -52,4 +55,4 @@ run_packer() {
   set +x
 }
 
-run_packer $BUILD_UUID $GIT_COMMIT "$@"
+run_packer "$BUILD_UUID" "$GIT_COMMIT" "$@"

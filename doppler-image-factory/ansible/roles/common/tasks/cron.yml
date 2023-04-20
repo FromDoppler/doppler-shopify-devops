@@ -1,5 +1,4 @@
 ---
-
 ## Crontab
 - name: Copy cron crontab
   copy: src=mysqldump.cron dest=/tmp/cronfile
