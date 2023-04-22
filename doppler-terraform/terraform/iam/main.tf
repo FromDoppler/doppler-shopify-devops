@@ -36,9 +36,10 @@ resource "aws_iam_user_policy_attachment" "policy-attach" {
   policy_arn = aws_iam_policy.jenkins-policy.arn
 }
 
+
 resource "aws_iam_user_policy_attachment" "ec2readonlyaccess-policy-attach" {
   user       = aws_iam_user.jenkins.name
-  policy_arn = arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }
 
 resource "aws_iam_role" "siab_servers_role" {
