@@ -64,5 +64,5 @@
    cron:
      user: "root"
      minute: "0"
-     job: "mysqldump -B doppler > /tmp/doppler.sql ;  /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date \"+\%Y\")/$(date \"+\%m\")/$(date \"+\%d\")/ ; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/"
+     job: "mysqldump -B doppler > /tmp/doppler.sql ; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date +%Y)/$(date +%m)/$(date +%d)/ ; /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/"
   
