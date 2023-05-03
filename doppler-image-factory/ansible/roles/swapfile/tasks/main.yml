@@ -7,4 +7,9 @@
       mkswap /swapfile
 
   - name: Enable swap file
-    shell: swapon /swapfile
+    command: swapon /swapfile
+
+  - name: Add swap file to fstab
+    shell: |
+      cp /etc/fstab /etc/fstab.bak
+      echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
