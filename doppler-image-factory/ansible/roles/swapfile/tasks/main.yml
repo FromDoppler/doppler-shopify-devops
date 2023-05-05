@@ -5,9 +5,7 @@
       fallocate -l 2G /swapfile
       chmod 600 /swapfile
       mkswap /swapfile
-
-  - name: Enable swap file
-    command: swapon /swapfile
+      swapon /swapfile
 
   - name: Add swap file to fstab
     shell: |

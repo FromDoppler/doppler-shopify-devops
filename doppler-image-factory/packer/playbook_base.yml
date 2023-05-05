@@ -10,4 +10,3 @@
     - boto
     - awscli
     - ntp
-    - swapfile
