@@ -71,6 +71,10 @@ resource "aws_iam_role_policy" "siab_servers_policy" {
       {
          "Effect":"Allow",
          "Action":[
+            "ssm:GetParameter",
+            "ssm:GetParameters",
+            "ssm:GetParameterHistory",
+            "ssm:GetParametersByPath",
             "s3:ListAllMyBuckets",
             "s3:ListBucket",
             "s3:GetBucketLocation",
