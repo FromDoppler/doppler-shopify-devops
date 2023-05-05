@@ -26,6 +26,6 @@ runcmd:
   - chown -R www-data:www-data /var/www/html/doppler-shopify
   - cd /var/www/html/doppler-shopify/ && composer install
   - /usr/local/bin/aws s3 cp s3://doppler-shopify/backup/$ENVIRONMENT/.env /var/www/html/doppler-shopify/.env
-  - php /var/www/html/doppler-shopify/artisan migrate
-  - if [ "${environment}" = "prd" ]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf \ 
-    else [ "${environment}" != "prd" ]; then sed -i "s/SRVNAME/sfyapp-${environment}.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf fi
+  - php /var/www/html/doppler-shopify/artisan migrate --no-interaction
+  - if [ "$ENVIRONMENT" = "prd" ]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
+  - if [ "$ENVIRONMENT" != "prd" ]; then sed -i "s/SRVNAME/sfyapp-$ENVIRONMENT.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi

@@ -66,7 +66,6 @@
      minute: "0"
      job: "/usr/local/bin/aws s3 cp /var/www/html/doppler-shopify/.env s3://doppler-shopify/backup/$ENVIRONMENT/.env"
 
-
  - name: Database backup
    cron:
      user: "root"
