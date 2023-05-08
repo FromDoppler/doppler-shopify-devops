@@ -25,7 +25,10 @@ runcmd:
   - mkdir -p /var/www/html/doppler-shopify && tar zxvf /var/www/html/latest.tar.gz -C /var/www/html/doppler-shopify
   - chown -R www-data:www-data /var/www/html/doppler-shopify
   - cd /var/www/html/doppler-shopify/ && composer install
-  - aws ssm get-parameter --name shopify-env --region us-east-2 --with-decryption | jq .Parameter.Value | tr -d \" > /var/www/html/doppler-shopify/.env
+  - aws ssm get-parameter --name shopify-$ENVIRONMENT-env --region us-east-2 --with-decryption | jq .Parameter.Value > /var/www/html/doppler-shopify/.env
+  - sed -i '0,/"/{s/"//}' /var/www/html/doppler-shopify/.env && sed -i 's/\(.*\)"/\1 /' /var/www/html/doppler-shopify/.env
+  - sed -i 's/\\n/\n/g' /var/www/html/doppler-shopify/.env && sed -i 's/=\\/=/' /var/www/html/doppler-shopify/.env
+  - sed -i 's/-\\/-/' /var/www/html/doppler-shopify/.env
   - php /var/www/html/doppler-shopify/artisan migrate --no-interaction
   - if [ "$ENVIRONMENT" = "prd" ]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
   - if [ "$ENVIRONMENT" != "prd" ]; then sed -i "s/SRVNAME/sfyapp-$ENVIRONMENT.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
