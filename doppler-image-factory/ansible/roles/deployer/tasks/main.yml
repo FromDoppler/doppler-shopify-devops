@@ -65,4 +65,10 @@
      user: "root"
      minute: "0"
      job: "mysqldump -B doppler > /tmp/doppler.sql && /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/$(date +\\%Y)/$(date +\\%m)/$(date +\\%d)/ && /usr/local/bin/aws s3 cp /tmp/doppler.sql s3://doppler-shopify/backup/$ENVIRONMENT/"
+
+ - name: Artisan sync
+   cron:
+     user: "root"
+     minute: "0"
+     job: "cd /var/www/html/doppler-shopify && php artisan schedule:run >> /dev/null 2>&1"
   

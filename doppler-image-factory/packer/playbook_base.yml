@@ -5,7 +5,6 @@
     - override_autoupdate: true
     - ntp_timezone: Etc/UTC
   roles:
-    - deployer
     - common
     - boto
     - awscli
