@@ -31,6 +31,6 @@ runcmd:
   - sed -i 's/\\n/\n/g' /var/www/html/doppler-shopify/.env && sed -i 's/=\\/=/' /var/www/html/doppler-shopify/.env
   - sed -i 's/-\\/-/' /var/www/html/doppler-shopify/.env
   - php /var/www/html/doppler-shopify/artisan migrate --no-interaction
-  - if [ "${environment}" = "prd" ]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
-  - if [ "${environment}" != "prd" ]; then sed -i "s/SRVNAME/sfyapp-${environment}.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
+  - if [ "${environment}" = "production" ]; then sed -i "s/SRVNAME/sfyapp.fromdoppler.com/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
+  - if [ "${environment}" != "production" ]; then sed -i "s/SRVNAME/sfyapp-${environment}.fromdoppler.net/" /etc/apache2/sites-enabled/doppler-shopify.conf ; fi
   - systemctl reload apache2
