@@ -24,6 +24,7 @@ runcmd:
   - mysql -e "CREATE USER 'doppler'@'%' IDENTIFIED BY 'yT0bH8mP0uV0xP2q'; GRANT ALL ON doppler.* TO 'doppler'@'%';"
   - /usr/local/bin/aws s3 cp s3://doppler-shopify/artifacts/${environment}/latest.tar.gz /var/www/html/latest.tar.gz
   - mkdir -p /var/www/html/doppler-shopify && tar zxvf /var/www/html/latest.tar.gz -C /var/www/html/doppler-shopify
+  - cd /var/www/html/doppler-shopify/storage/logs && touch laravel.log
   - chown -R www-data:www-data /var/www/html/doppler-shopify
   - cd /var/www/html/doppler-shopify/ && composer install
   - aws ssm get-parameter --name shopify-${environment}-env --region us-east-2 --with-decryption | jq .Parameter.Value > /var/www/html/doppler-shopify/.env
