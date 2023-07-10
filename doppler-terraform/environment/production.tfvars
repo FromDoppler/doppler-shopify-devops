@@ -30,5 +30,5 @@ admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
                         "104.131.79.81/32",      # doppler jenkins
-                        "190.230.121.101/32"     # Lucas Barros Nimbux911
+                        "181.12.244.90/32"       # Lucas Barros Home - Nimbux911
                     ]
