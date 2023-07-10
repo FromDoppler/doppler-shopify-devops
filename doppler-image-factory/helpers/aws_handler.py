@@ -135,10 +135,13 @@ class AWSHandler:
             # if tag existed, add the value of $environment
             if pos:
                 approved_for = tags.pop(pos)
-                approved_for_values = filter(None, approved_for['Value'].split('|'))
-                if environment not in approved_for_values:
-                    approved_for_values.append(environment)
-                approved_for['Value'] = '|'.join(sorted(approved_for_values))
+                if approved_for['Value'] == '':
+                    approved_for['Value'] = environment
+                else:
+                    approved_for_values = approved_for['Value'].split('|')
+                    if environment not in approved_for_values:
+                        approved_for_values.append(environment)
+                        approved_for['Value'] = '|'.join(approved_for_values)
                 tags.append(approved_for)
             else:
                 tags.append({'Key': 'Approved_for', 'Value': environment})
