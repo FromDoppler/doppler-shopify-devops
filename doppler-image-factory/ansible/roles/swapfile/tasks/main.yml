@@ -1,13 +1,12 @@
 ---
+- name: Create swap file
+  shell: |
+    fallocate -l 2G /swapfile
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
 
-  - name: Create swap file
-    shell: |
-      fallocate -l 2G /swapfile
-      chmod 600 /swapfile
-      mkswap /swapfile
-      swapon /swapfile
-
-  - name: Add swap file to fstab
-    shell: |
-      cp /etc/fstab /etc/fstab.bak
-      echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+- name: Add swap file to fstab
+  shell: |
+    cp /etc/fstab /etc/fstab.bak
+    echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
