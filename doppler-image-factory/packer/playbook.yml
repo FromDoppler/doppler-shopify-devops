@@ -10,6 +10,7 @@
         ansible_python_interpreter: "/usr/bin/python3"
         when: ansible_python_interpreter is not defined
   roles:
+    - deployer
     - common
     - apache
     - apache-config
@@ -17,3 +18,4 @@
     - php
     - php-config
     - mysql
+    - swapfile

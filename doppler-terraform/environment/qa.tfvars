@@ -1,4 +1,4 @@
-# TF statment
+﻿# TF statment
 tf_bucket                       = "doppler-tf-states"
 
 account                         = "288672893446"
@@ -23,10 +23,11 @@ asg_check_type = "ELB"
 doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/fb9511ff-8c1b-434e-a58b-136d4f747285"
 
 ## SSH Access for dev and admins
-admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
-                        "190.105.118.48/32",     # Adrián Aguirre VNS
-                        "181.46.166.218/32",     # Adrián Catacora
+admin_access_cidr   = [ "190.194.178.211/32",    # Federico Aguirre VNS
+                        "159.223.137.130/32",    # VPN Vns
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
-                        "159.89.34.79/32"        # doppler jenkins
+                        "104.131.79.81/32",      # doppler jenkins
+                        "159.89.34.79/32",       # doppler jenkins new
+                        "181.12.244.90/32",      # Lucas Barros Nimbux911
                     ]

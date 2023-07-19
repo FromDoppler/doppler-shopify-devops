@@ -40,7 +40,7 @@ resource "aws_launch_configuration" "lc" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes = [ user_data ]
+    ignore_changes = []
   }
 }
 
@@ -61,7 +61,7 @@ resource "aws_autoscaling_group" "asg" {
   launch_configuration      = aws_launch_configuration.lc.name
   enabled_metrics           = var.asg_enabled_metrics
   target_group_arns         = var.asg_target_groups
-
+  suspended_processes       = []
 
   tag {
     key                 = "Name"

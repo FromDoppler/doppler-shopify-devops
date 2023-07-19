@@ -1,4 +1,4 @@
----
+﻿---
 - include: install.yml
   tags:
     - common_install
@@ -9,4 +9,3 @@
   tags:
     - common_override
 - include: sysctl.yml
-- include: cron.yml
