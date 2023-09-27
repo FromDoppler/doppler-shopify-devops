@@ -1,0 +1,40 @@
+---
+- name: Asegurar que el directorio logrotate.d exista
+  file:
+    path: /etc/logrotate.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+
+- name: Crear el archivo de configuración de logrotate para Doppler Shopify
+  file:
+    path: /etc/logrotate.d/doppler-shopify-logs
+    state: touch
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: Agregar configuración al archivo de logrotate
+  blockinfile:
+    path: /etc/logrotate.d/doppler-shopify-logs
+    block: |
+      /var/www/html/doppler-shopify/storage/logs/*.log {
+        weekly
+        rotate 7
+        compress
+        missingok
+        notifempty
+      }
+  become: yes
+
+- name: Verificar la existencia del archivo de logrotate
+  stat:
+    path: /etc/logrotate.d/doppler-shopify-logs
+  register: logrotate_file_info
+
+- name: Imprimir mensaje de éxito o error
+  debug:
+    msg: "Archivo de logrotate {{ 'creado' if logrotate_file_info.stat.exists else 'no creado' }} con éxito."

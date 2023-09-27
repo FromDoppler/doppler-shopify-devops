@@ -21,3 +21,4 @@
     - redis
     - supervisor
     - swapfile
+    - logrotate
