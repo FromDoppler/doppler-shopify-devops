@@ -1,0 +1,16 @@
+---
+- name: Install Supervisor
+  apt:
+    name: supervisor
+    state: present
+  become: yes
+  tags:
+    - supervisor
+
+- name: Copy Supervisor configuration file
+  copy:
+    src: files/laravel-worker.conf
+    dest: /etc/supervisor/conf.d/laravel-worker.conf
+  become: yes
+  tags:
+    - supervisor

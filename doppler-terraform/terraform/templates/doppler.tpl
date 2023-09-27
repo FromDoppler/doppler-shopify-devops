@@ -25,8 +25,10 @@ runcmd:
   - /usr/local/bin/aws s3 cp s3://doppler-shopify/artifacts/${environment}/latest.tar.gz /var/www/html/latest.tar.gz
   - mkdir -p /var/www/html/doppler-shopify && tar zxvf /var/www/html/latest.tar.gz -C /var/www/html/doppler-shopify
   - cd /var/www/html/doppler-shopify/storage/logs && touch laravel.log
-  - chown -R www-data:www-data /var/www/html/doppler-shopify
+  - cd /var/www/html/doppler-shopify/storage/logs && touch horizon.log
   - cd /var/www/html/doppler-shopify/ && composer install
+  - cd /var/www/html/doppler-shopify/ && php artisan horizon:install
+  - chown -R www-data:www-data /var/www/html/doppler-shopify/
   - aws ssm get-parameter --name shopify-${environment}-env --region us-east-2 --with-decryption | jq .Parameter.Value > /var/www/html/doppler-shopify/.env
   - sed -i '0,/"/{s/"//}' /var/www/html/doppler-shopify/.env && sed -i 's/\(.*\)"/\1 /' /var/www/html/doppler-shopify/.env
   - sed -i 's/\\n/\n/g' /var/www/html/doppler-shopify/.env && sed -i 's/=\\/=/' /var/www/html/doppler-shopify/.env

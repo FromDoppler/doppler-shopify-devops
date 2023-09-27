@@ -1,0 +1,15 @@
+---
+- name: Aseguramos que Redis está instalado
+  apt: name=redis-server state=present update_cache=yes
+  tags:
+    - redis
+
+- name: Instalamos Redis Server
+  shell: apt-get install redis-server
+  tags:
+    - redis
+
+- name: Instalamos la extensión PHP Redis
+  apt: name=php-redis state=present update_cache=yes
+  tags:
+    - redis
