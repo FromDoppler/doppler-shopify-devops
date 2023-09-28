@@ -9,7 +9,10 @@
   tags:
     - redis
 
-- name: Instalamos la extensión PHP Redis
-  apt: name=php-redis state=present update_cache=yes
+- name: Instalamos la extensión PHP Redis para PHP 7.4
+  apt:
+    name: php7.4-redis
+    state: present
+    update_cache: yes
   tags:
     - redis
