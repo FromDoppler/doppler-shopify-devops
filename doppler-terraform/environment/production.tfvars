@@ -14,7 +14,7 @@ aws_region                      = "us-east-2"
 # ASG
 asg_enabled_metrics = []
 role          = "siab"
-isntance_type = "t3.medium"
+isntance_type = "t3.large"
 asg_desired_capacity = 1
 asg_min_size = 1
 asg_max_size = 1
@@ -28,6 +28,8 @@ admin_access_cidr   = [ "190.16.38.64/32",       # Federico Aguirre VNS
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
                         "104.131.79.81/32",      # doppler jenkins
+                        "159.89.34.79/32",       # doppler jenkins
                         "181.12.244.90/32",      # Lucas Barros Home - Nimbux911
-                        "181.46.165.33/32"       # Combinatoria
+                        "181.46.165.33/32",      # Combinatoria
+                        "181.46.160.115/32"      # Combinatoria
                     ]
