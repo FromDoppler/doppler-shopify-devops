@@ -14,7 +14,7 @@ aws_region                      = "us-east-2"
 # ASG
 asg_enabled_metrics = []
 role          = "siab"
-isntance_type = "t3.large"
+isntance_type = "t3.medium"
 asg_desired_capacity = 1
 asg_min_size = 1
 asg_max_size = 1
