@@ -2,8 +2,8 @@
 tf_bucket                       = "doppler-tf-states"
 
 account                         = "288672893446"
-environment                     = "qa"
-environment_code                = "qa"
+environment                     = "dev"
+environment_code                = "dev"
 az                              = [ "us-east-2a", "us-east-2b", "us-east-2c" ]
 iam_role                        = "doppler-shopify"
 private_subnets_cidr            = [ "10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24" ]
@@ -24,10 +24,11 @@ doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/fb9511ff-8c1b-
 
 ## SSH Access for dev and admins
 admin_access_cidr   = [ "190.194.178.211/32",    # Federico Aguirre VNS
+                        "159.223.137.130/32",    # VPN Vns
                         "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
                         "104.131.79.81/32",      # doppler jenkins
                         "159.89.34.79/32",       # doppler jenkins new
+                        "181.12.244.90/32",      # Lucas Barros Nimbux911
                         "181.46.165.33/32",      # Mariano Merlo Combinatoria
-                        "181.46.160.115/32",     # Matias Corrao Combinatoria
                     ]

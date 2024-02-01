@@ -68,3 +68,11 @@
     user: "root"
     minute: "0"
     job: "cd /var/www/html/doppler-shopify && php artisan schedule:run >> /dev/null 2>&1"
+
+- name: Prune failed jobs "At 00:00 on Sunday."
+  cron:
+    user: "www-data"
+    minute: "0"
+    hour: "0"
+    weekday: "0"
+    job: "cd /var/www/html/doppler-shopify && php artisan queue:prune-failed --hours=48 && php artisan queue:flush"
