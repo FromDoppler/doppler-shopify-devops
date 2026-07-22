@@ -76,7 +76,7 @@ plan)
   echo "Planning for $DEBUG_OUT"
 
   cp "$ENVIRONMENT_ROOT/$CONFIG.tfvars" "$WORKDIR/terraform.tfvars"
-  rsync -ar --no-links "terraform/$STACK/" "$WORKDIR/"
+  cp -R "terraform/$STACK/." "$WORKDIR/"
   cd "$WORKDIR"
   terraform plan -out "$ENVIRONMENT.tfplan" "$@"
   ;;
@@ -87,7 +87,7 @@ plan-destroy)
       exit 1
   }
   cp "$ENVIRONMENT_ROOT/$CONFIG.tfvars" "$WORKDIR/terraform.tfvars"
-  rsync -ar --no-links "terraform/$STACK/" "$WORKDIR/"
+  cp -R "terraform/$STACK/." "$WORKDIR/"
   cd "$WORKDIR"
   terraform plan -destroy -out "$ENVIRONMENT.tfplan" "$@"
   ;;
