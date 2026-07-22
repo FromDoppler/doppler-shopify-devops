@@ -5,6 +5,6 @@
     - boto
 
 - name: Instalamos boyo
-  shell: pip install -U boto3
+  shell: python3 -m pip install -U boto3
   tags:
     - boto
