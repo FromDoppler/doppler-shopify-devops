@@ -23,11 +23,8 @@ asg_check_type = "ELB"
 doppler_ssl_arn = "arn:aws:acm:us-east-2:288672893446:certificate/fb9511ff-8c1b-434e-a58b-136d4f747285"
 
 ## SSH Access for dev and admins
-admin_access_cidr   = [ "190.194.178.211/32",    # Federico Aguirre VNS
-                        "200.5.229.58/32",       # doppler VPN1
+admin_access_cidr   = [ "200.5.229.58/32",       # doppler VPN1
                         "200.5.253.210/32",      # doppler VPN2
                         "104.131.79.81/32",      # doppler jenkins
                         "159.89.34.79/32",       # doppler jenkins new
-                        "181.46.165.33/32",      # Mariano Merlo Combinatoria
-                        "181.46.160.115/32",     # Matias Corrao Combinatoria
                     ]
