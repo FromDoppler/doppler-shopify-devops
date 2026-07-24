@@ -1,77 +1,128 @@
 # Image Factory w/Ansible and Packer
 
-## Install Ansible
+## Prerequisites
 
-The server configuration has been automated using Ansible. You can download it from [here](https://www.ansible.com/).
+The server configuration is automated with Ansible and the image creation is automated with Packer.
 
-The images creation has been automated using Packer. You can download it [here](https://www.packer.io/downloads.html).
+Install these tools before running the workflow:
 
-- Download these tools packages for your OS.
-- Clone this repo below on your desired folder.
+- `ansible`
+- `packer`
+- `aws cli`
+- `python3`
+- `python3-venv`
+- `git`
+
+After installing Packer, also install the required plugins:
 
 ```bash
-git git@github.com:FromDoppler/doppler-shopify-devops.git
-cd doppler-shopify-devops
+packer plugins install github.com/hashicorp/amazon
+packer plugins install github.com/hashicorp/ansible
+```
+
+Clone the repository on your desired folder:
+
+```bash
+git clone git@github.com:FromDoppler/doppler-shopify-devops.git
+cd doppler-shopify-devops/doppler-image-factory
 ```
 
 ## Variables that need to be exported
 
-- AWS_ACCOUNT - Account in where we will be working on.
-- AWS_REGION - Region in where we will be working on.
-- AWS_PROFILE - AWS cli profile with the proper trusted relationship to assume automation_role
-- VAULT_SECRET - Ansible secret to decrypt the encrypted vault.
+- `AWS_ACCOUNT`: account where the image will be created.
+- `AWS_REGION`: region where the image will be created.
+- `AWS_PROFILE`: AWS CLI profile with permission to assume `automation_role`.
+- `VAULT_SECRET`: Ansible secret used to decrypt the encrypted vault.
 
-```
+```bash
 export AWS_ACCOUNT='12345678'
 export AWS_REGION='us-west-2'
 export AWS_PROFILE='my-profile'
 export VAULT_SECRET='DummyV4uL7S3cR37'
 ```
 
+## Python environment for `ami`
+
+The `ami` helper uses Python 3 and `boto3`. On recent Linux distributions, `boto3` is usually easier to manage inside a virtual environment.
+
+Example:
+
+```bash
+python3 -m venv ~/doppler-ami-venv
+source ~/doppler-ami-venv/bin/activate
+pip install boto3
+```
+
+With the virtual environment active, run the helper as:
+
+```bash
+python ./ami list base
+python ./ami list siab
+```
+
 ## Directory structure
 
-- ansible: roles and playbooks to configure any type of server needed for this platform.
-- helpers: tools and scripts to handle AWS AMIS.
-- packer: configuration files and main playbooks for Packer to build server images.
+- `ansible`: roles and playbooks to configure the servers used by this platform.
+- `helpers`: tools and scripts to handle AWS AMIs.
+- `packer`: configuration files and playbooks used by Packer to build server images.
 
 ## Workflow
 
-We have developed some wrappers around Packer and AWS to allow us to create the images in a safe way, including the promotion of these artifacts between the different environments. Typical steps to end up with an AMI for a new type of server would be something like this:
+We use wrappers around Packer and AWS to create images and promote them between environments in a controlled way.
 
-1. Add your Ansible roles to `ansible/roles`
-2. You could also make use of community roles by referencing them in `ansible/requirements.yml`
-3. Add your new host definition to the main Packer playbook `packer/playbook.yml`, including roles and vars.
-4. Commit and push
-5. Create your new server image. For example, this will create a new AMI for the SIAB type of server:
+1. Add or update your Ansible roles in `ansible/roles`.
+2. If needed, reference community roles in `ansible/requirements.yml`.
+3. Update the main Packer playbook `packer/playbook.yml`, including the required roles and vars.
+4. Commit and push your changes.
+5. Build the base image:
 
 ```bash
-./packer_base.sh base (to build base image)
+./packer_base.sh base
+```
+
+6. Validate that the base image was created:
+
+```bash
+python ./ami list base
+```
+
+7. Build the SIAB image:
+
+```bash
 ./packer.sh siab
 ```
 
-6. See the image you just created in a list:
+8. List the generated SIAB image:
 
 ```bash
-./ami list siab
-
-+--------------------------------------+-----------------+-----------------------+----------+----------------------+--------------+
-| UUID                                 | Name            | us-east-2             | Approved | Date                 | Commit       |
-+--------------------------------------+-----------------+-----------------------+----------+----------------------+--------------+
-| ED818119-43B2-4035-828F-FCF7CEA11A58 | siab-1629852160 | ami-00b1dccea2f8a5d62 | qa       | 2021-08-25T00:42:40Z | 342e34c-dirty|
-+--------------------------------------+-----------------+-----------------------+----------+----------------------+--------------+
-Total: 1 row/s
+python ./ami list siab
 ```
 
-7. Promote the AMI so it can be used in the environment you need:
+9. Promote the AMI so it can be approved for the target environment:
 
 ```bash
-./ami promote 691BE40D-81F1-4021-89C1-B1BAA4382C45 dev
+python ./ami promote UUID_DE_LA_IMAGEN qa
 ```
 
-8. Your AMI is now ready to be used by your Terraform code
+10. After promotion, use Terraform to apply that approved image in the target environment.
+
+Promoting an AMI does not make an existing instance start using it automatically. The new image is used after Terraform updates the infrastructure and the corresponding instance is replaced or rotated.
+
+## Image baseline
+
+The current base image for this repository is built on Ubuntu 22.04.
+
+For the Shopify environment:
+
+- PHP target version is `8.2`
+- `xmlrpc` is not part of the installed PHP package set
+
+## Troubleshooting
+
+- `ami list` or `ami promote` can fail if the AWS credentials behind `AWS_PROFILE` cannot assume `automation_role`. Make sure the profile has permission to call `sts:AssumeRole` for that role.
 
 ## AMI types we created for this project
 
-| AMI type | Description                                       | Usage                                                                                                         |
-| -------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| siab     | For Stack-in-a-box servers, including app and dbs | Terraform will use this image to create standalone, all-in-one server for minor environments, like DEV and QA |
+| AMI type | Description | Usage |
+| -------- | ----------- | ----- |
+| `siab` | Stack-in-a-box servers, including app and databases | Terraform uses this image to create standalone all-in-one servers for smaller environments such as `dev` and `qa` |
