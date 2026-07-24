@@ -1,2 +1,3 @@
 ---
 - include: php-config.yml
+- include: php-runtime.yml

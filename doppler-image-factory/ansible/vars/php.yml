@@ -14,12 +14,14 @@ php_upload_max_filesize: "256M"
 
 ## Extra packages and mods
 php_packages_extra:
+  - php{{php_version}}-curl
   - php{{php_version}}-intl
   - php{{php_version}}-ldap
   - php{{php_version}}-mailparse
   - php{{php_version}}-mysqli
   - php{{php_version}}-mysqlnd
   - php{{php_version}}-soap
+  - php{{php_version}}-xml
   - php{{php_version}}-xdebug
   - php{{php_version}}-zip
   - libapache2-mod-php{{php_version}}
