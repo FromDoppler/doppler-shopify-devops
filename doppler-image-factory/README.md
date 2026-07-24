@@ -123,6 +123,6 @@ For the Shopify environment:
 
 ## AMI types we created for this project
 
-| AMI type | Description | Usage |
-| -------- | ----------- | ----- |
-| `siab` | Stack-in-a-box servers, including app and databases | Terraform uses this image to create standalone all-in-one servers for smaller environments such as `dev` and `qa` |
+| AMI type | Description                                         | Usage                                                                                                             |
+| -------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `siab`   | Stack-in-a-box servers, including app and databases | Terraform uses this image to create standalone all-in-one servers for smaller environments such as `dev` and `qa` |
