@@ -1,0 +1,17 @@
+---
+- name: Set PHP CLI default to the configured version
+  command: "update-alternatives --set php /usr/bin/php{{ php_version }}"
+
+- name: Enable Apache PHP module for the configured version
+  command: "a2enmod php{{ php_version }}"
+
+- name: Disable Apache PHP 8.1 module when present
+  command: "a2dismod php8.1"
+  register: php81_module_disable
+  failed_when: php81_module_disable.rc not in [0, 1]
+  changed_when: php81_module_disable.rc == 0
+
+- name: Restart Apache after PHP runtime adjustments
+  service:
+    name: apache2
+    state: restarted

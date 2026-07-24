@@ -18,6 +18,7 @@ if [ -z "$AWS_PROFILE" ];then
   usage
 fi
 
+
 if [ -z "$VAULT_SECRET" ];then
   echo "La variable VAULT_SECRET no está seteada"
   usage

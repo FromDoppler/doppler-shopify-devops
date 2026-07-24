@@ -5,6 +5,6 @@
     - awscli
 
 - name: Instalamos awscli
-  shell: pip install -U awscli
+  shell: python3 -m pip install -U awscli
   tags:
     - awscli

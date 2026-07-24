@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: yes
 
 - name: Crear el archivo de configuración de logrotate para Doppler Shopify
@@ -14,7 +14,7 @@
     state: touch
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: yes
 
 - name: Agregar configuración al archivo de logrotate

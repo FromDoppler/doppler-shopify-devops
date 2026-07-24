@@ -8,8 +8,8 @@ The AWS infrastructure has been automated using Terraform, you can download from
 - Clone this repo on your desired folder.
 
 ```bash
-git git@github.com:FromDoppler/doppler-shopify-devops.git
-cd doppler-shopify-devops
+git clone git@github.com:FromDoppler/doppler-shopify-devops.git
+cd doppler-shopify-devops/doppler-terraform
 ```
 
 ## Prerequisites
@@ -25,6 +25,8 @@ With the following commands you will be able to build the whole environment at A
 ./terraform.sh plan ${ENVIRONMENT} ${STACK}
 ./terraform.sh apply ${ENVIRONMENT} ${STACK}
 ```
+
+Always review the output of `plan` before running `apply`, because Terraform can include changes in addition to the AMI update you are expecting.
 
 When running the first time, follow this order:
 
@@ -42,6 +44,23 @@ Example:
 ./terraform.sh init operations vpc
 ./terraform.sh init operations iam
 ```
+
+## QA update flow for `siab`
+
+When you want QA to use a new `siab` image, use this order:
+
+1. Build and promote the new AMI from `doppler-image-factory`.
+2. Run Terraform for QA:
+
+```bash
+./terraform.sh init qa siab
+./terraform.sh plan qa siab
+./terraform.sh apply qa siab
+```
+
+3. Validate that the Auto Scaling Group has rotated or replaced the QA instance so the new image is effectively in use.
+
+Promoting an AMI is not enough by itself. Terraform must apply the approved image in QA, and then the corresponding instance must be replaced or rotated before the new image is actually used.
 
 ## What is "siab"
 

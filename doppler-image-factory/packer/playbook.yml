@@ -9,6 +9,10 @@
       set_fact:
         ansible_python_interpreter: "/usr/bin/python3"
         when: ansible_python_interpreter is not defined
+    - name: Refresh apt cache before package-heavy roles
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
   roles:
     - deployer
     - common

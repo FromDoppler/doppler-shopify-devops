@@ -19,3 +19,28 @@
 
 - name: Disable timer
   command: systemctl disable apt-daily.timer
+
+- name: Disable apt daily upgrade service
+  command: systemctl disable apt-daily-upgrade.service
+
+- name: Disable apt daily upgrade timer
+  command: systemctl disable apt-daily-upgrade.timer
+
+- name: Stop unattended upgrades service if running
+  systemd:
+    name: unattended-upgrades
+    state: stopped
+    enabled: false
+  failed_when: false
+
+- name: Stop apt daily service if running
+  systemd:
+    name: apt-daily.service
+    state: stopped
+  failed_when: false
+
+- name: Stop apt daily upgrade service if running
+  systemd:
+    name: apt-daily-upgrade.service
+    state: stopped
+  failed_when: false
