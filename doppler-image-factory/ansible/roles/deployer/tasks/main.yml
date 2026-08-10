@@ -66,7 +66,7 @@
 - name: Artisan sync
   cron:
     user: "root"
-    minute: "0"
+    minute: "*"
     job: "cd /var/www/html/doppler-shopify && php8.2 artisan schedule:run >> /dev/null 2>&1"
 
 - name: Prune failed jobs "At 00:00 on Sunday."
